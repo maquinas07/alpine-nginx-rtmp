@@ -1,0 +1,20 @@
+name: Docker Build
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build and push the Docker image
+      env:
+        DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+      run: |
+        docker build . -t alpine-nginx-rtmp:latest
+        echo $DOCKERHUB_TOKEN | docker login -u maquinas07 --password-stdin
+        docker tag alpine-nginx-rtmp:latest maquinas07/alpine-nginx-rtmp:latest
+        docker push maquinas07/alpine-nginx-rtmp:latest
