@@ -2,8 +2,8 @@
 
 Dockerfile with minimal install of NGINX and nginx-rtmp-module built on Alpine Linux.
 
-* NGINX - 1.19.3 Latest release
-* nginx-rtmp-module - 1.2.1 Latest release
+* NGINX - 1.27.4 Latest release
+* nginx-rtmp-module - 1.2.2 Latest release
 
 [![Docker Pulls](https://img.shields.io/docker/pulls/maquinas07/alpine-nginx-rtmp.svg?logo=docker)](https://hub.docker.com/r/maquinas07/alpine-nginx-rtmp/)
 [![Build Status](https://img.shields.io/docker/cloud/build/maquinas07/alpine-nginx-rtmp?logo=docker)](https://hub.docker.com/r/maquinas07/alpine-nginx-rtmp/)
