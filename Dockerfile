@@ -1,11 +1,9 @@
-ARG NGINX_VERSION=1.19.3
-ARG NGINX_RTMP_VERSION=1.2.1
+ARG NGINX_VERSION=1.27.4
+ARG NGINX_RTMP_VERSION=1.2.2
 
-FROM alpine:3.12 AS build
+FROM alpine:3.21 AS build
 ARG NGINX_VERSION
 ARG NGINX_RTMP_VERSION
-
-COPY nginx-rtmp-fallthrough-fix.patch /tmp/nginx-rtmp-fallthrough-fix.patch
 
 RUN \
   build_pkgs="build-base linux-headers openssl-dev pcre-dev wget zlib-dev patch" && \
@@ -15,7 +13,6 @@ RUN \
   wget https://github.com/arut/nginx-rtmp-module/archive/v${NGINX_RTMP_VERSION}.tar.gz && \
   tar xzf nginx-${NGINX_VERSION}.tar.gz && \
   tar xzf v${NGINX_RTMP_VERSION}.tar.gz && \
-  patch nginx-rtmp-module-${NGINX_RTMP_VERSION}/ngx_rtmp_eval.c /tmp/nginx-rtmp-fallthrough-fix.patch && \
   cd /tmp/nginx-${NGINX_VERSION} && \
   ./configure \
     --prefix=/etc/nginx \
@@ -33,9 +30,9 @@ RUN \
   apk del ${build_pkgs} && \
   rm -rf /var/cache/apk/*
 
-FROM alpine:3.12
+FROM alpine:3.21
 
-LABEL MAINTAINER Elias Menon <eliasmenon@gmail.com>
+LABEL MAINTAINER="Elias Menon <eliasmenon@gmail.com>"
 
 COPY --from=build /usr/sbin/nginx /usr/sbin/nginx
 COPY --from=build /etc/nginx /etc/nginx
